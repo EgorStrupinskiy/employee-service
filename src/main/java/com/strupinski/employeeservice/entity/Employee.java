@@ -1,20 +1,19 @@
 package com.strupinski.employeeservice.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
+
+import javax.persistence.*;
 
 
 @Entity
 @Table(name = "employees")
 @Data
 public class Employee {
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
