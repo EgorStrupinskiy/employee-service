@@ -16,21 +16,21 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource);
-        User.UserBuilder userBuilder = User.withDefaultPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser(userBuilder
-                        .username("egor")
-                        .password("egor")
-                        .roles("EMPLOYEE"))
-                .withUser(userBuilder
-                        .username("vlad")
-                        .password("vlad")
-                        .roles("HR"))
-                .withUser(userBuilder
-                        .username("ivan")
-                        .password("ivan")
-                        .roles("MANAGER", "HR"));
+        auth.jdbcAuthentication().dataSource(dataSource);
+//        User.UserBuilder userBuilder = User.withDefaultPasswordEncoder();
+//        auth.inMemoryAuthentication()
+//                .withUser(userBuilder
+//                        .username("egor")
+//                        .password("egor")
+//                        .roles("EMPLOYEE"))
+//                .withUser(userBuilder
+//                        .username("vlad")
+//                        .password("vlad")
+//                        .roles("HR"))
+//                .withUser(userBuilder
+//                        .username("ivan")
+//                        .password("ivan")
+//                        .roles("MANAGER", "HR"));
 
     }
 
