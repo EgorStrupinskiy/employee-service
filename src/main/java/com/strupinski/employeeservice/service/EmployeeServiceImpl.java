@@ -1,44 +1,42 @@
 package com.strupinski.employeeservice.service;
 
 
-import com.strupinski.employeeservice.dao.EmployeeDAO;
+
 import com.strupinski.employeeservice.entity.Employee;
+import com.strupinski.employeeservice.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
-    @Override
     @Transactional
+    @Override
     public List<Employee> getAllEmployees() {
-        return employeeDAO.getAllEmployees();
+        return employeeRepository.findAll();
     }
 
-    @Override
     @Transactional
+    @Override
     public void saveEmployee(Employee employee) {
-        employeeDAO.saveEmployee(employee);
+        employeeRepository.save(employee);
     }
 
-
-    @Override
     @Transactional
-    public Employee getEmployee(int id) {
-        return employeeDAO.getEmployee(id);
+    @Override
+    public Optional<Employee> getEmployee(int id) {
+        return employeeRepository.findById((long) id);
     }
 
-    @Override
     @Transactional
+    @Override
     public void deleteEmployee(int id) {
-        employeeDAO.deleteEmployee(id);
+        employeeRepository.deleteById((long) id);
     }
-
-
 }

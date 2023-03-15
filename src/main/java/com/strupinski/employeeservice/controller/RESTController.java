@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -37,7 +38,7 @@ public class RESTController {
 
     @DeleteMapping("/employees/{id}")
     public String deleteEmployee(@PathVariable int id) {
-        Employee employee = employeeService.getEmployee(id);
+        Optional<Employee> employee = employeeService.getEmployee(id);
 
         employeeService.deleteEmployee(id);
 
@@ -45,8 +46,8 @@ public class RESTController {
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployee(@PathVariable int id) {
-        Employee employee = employeeService.getEmployee(id);
+    public Optional<Employee> getEmployee(@PathVariable int id) {
+        Optional<Employee> employee = employeeService.getEmployee(id);
         return employee;
     }
 }
