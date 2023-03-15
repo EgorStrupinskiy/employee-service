@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = userRepository.getByLogin(username);
@@ -32,7 +34,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return new org.springframework.security.core.userdetails.User(u.getLogin(), u.getPassword(), true, true, true, true, new HashSet<>());
     }
 
+    @Transactional
     public List<User> getAll() {
-        return userRepository.getAll();
+        return userRepository.findAll();
     }
 }

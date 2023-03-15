@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,28 +20,38 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select username, authority from authorities where username=?");
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource);
+        User.UserBuilder userBuilder = User.withDefaultPasswordEncoder();
+        auth.inMemoryAuthentication()
+                .withUser(userBuilder
+                        .username("egor")
+                        .password("egor")
+                        .roles("EMPLOYEE"))
+                .withUser(userBuilder
+                        .username("vlad")
+                        .password("vlad")
+                        .roles("HR"))
+                .withUser(userBuilder
+                        .username("ivan")
+                        .password("ivan")
+                        .roles("MANAGER", "HR"));
+
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/employees").hasRole("HR")
                 .antMatchers(HttpMethod.POST, "/employees").hasRole("MANAGER")
                 .antMatchers(HttpMethod.DELETE, "/employees/{id}").hasRole("HR")
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .httpBasic();
+
+
 
 //        .authorizeRequests()
 //                .antMatchers("/employees").hasRole("HR")
