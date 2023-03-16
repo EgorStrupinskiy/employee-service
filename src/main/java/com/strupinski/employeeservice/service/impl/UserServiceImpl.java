@@ -1,4 +1,4 @@
-package com.strupinski.employeeservice.service;
+package com.strupinski.employeeservice.service.impl;
 
 
 
@@ -6,6 +6,7 @@ import com.strupinski.employeeservice.entity.Employee;
 import com.strupinski.employeeservice.entity.User;
 import com.strupinski.employeeservice.repository.EmployeeRepository;
 import com.strupinski.employeeservice.repository.UserRepository;
+import com.strupinski.employeeservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throw new UsernameNotFoundException(String.format("User %s is not found", username));
         }
         return new org.springframework.security.core.userdetails.User(u.getLogin(), u.getPassword(), true, true, true, true, new HashSet<>());
+    }
+
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
     }
 
     @Transactional

@@ -1,6 +1,7 @@
 package com.strupinski.employeeservice.service;
 
 
+import com.strupinski.employeeservice.dto.EmployeeDTO;
 import com.strupinski.employeeservice.entity.Employee;
 
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.Optional;
 public interface EmployeeService {
     List<Employee> getAllEmployees();
 
-    void saveEmployee(Employee employee);
+    EmployeeDTO saveEmployee(EmployeeDTO employee);
 
-    Optional<Employee> getEmployee(int id);
+    EmployeeDTO getEmployee(Long id);
 
 
-    void deleteEmployee(int id);
+    void deleteEmployee(Long id);
 }
