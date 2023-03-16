@@ -1,4 +1,4 @@
-package com.strupinski.employeeservice.configuration;
+package com.strupinski.employeeservice.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

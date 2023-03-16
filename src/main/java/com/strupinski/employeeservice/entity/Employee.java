@@ -1,6 +1,10 @@
 package com.strupinski.employeeservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 
 import javax.persistence.*;
@@ -8,7 +12,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +28,10 @@ public class Employee {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "department")
-    private String department;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private Department department;
 
     @Column(name = "salary")
     private int salary;
