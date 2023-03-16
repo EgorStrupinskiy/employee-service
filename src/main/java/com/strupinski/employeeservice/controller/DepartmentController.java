@@ -27,6 +27,13 @@ public class DepartmentController {
         return this.service.getAll();
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteDepartment(@PathVariable Long id) {
+        service.deleteById(id);
+
+        return "Department with id " + id + " was deleted";
+    }
+
     @PostMapping("/")
     public DepartmentDTO addNewDepartment(@RequestBody DepartmentDTO department) {
         return service.saveDepartment(department);

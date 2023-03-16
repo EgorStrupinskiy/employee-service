@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +21,16 @@ import java.util.List;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Employee> employees;
+
 
     public void addEmployee(Employee employee) {
         if (employees == null) {

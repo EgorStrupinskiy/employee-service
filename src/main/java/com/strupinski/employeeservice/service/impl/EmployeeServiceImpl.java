@@ -5,6 +5,7 @@ package com.strupinski.employeeservice.service.impl;
 import com.strupinski.employeeservice.dto.EmployeeDTO;
 import com.strupinski.employeeservice.dto.converter.EmployeeConverter;
 import com.strupinski.employeeservice.entity.Employee;
+import com.strupinski.employeeservice.exception.NoSuchRecordException;
 import com.strupinski.employeeservice.repository.EmployeeRepository;
 import com.strupinski.employeeservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -26,25 +28,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(converter::toDTO)
+                .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
+        return converter.toDTO(employeeRepository.save(converter.toEntity(employeeDTO)));
+    }
+
+    @Override
+    @Transactional
+    public EmployeeDTO findById(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new NoSuchRecordException
+                        (String.format("Employee with id=%s not found", id))
+                );
+        return converter.toDTO(employee);    }
 
     @Transactional
     @Override
-    public EmployeeDTO saveEmployee(EmployeeDTO employee) {
-        return converter.toDTO(employeeRepository.save(converter.toEntity(employee)));
-    }
-
-    @Transactional
-    @Override
-    public EmployeeDTO getEmployee(Long id) {
-        return converter.toDTO(employeeRepository.getById(id));
-    }
-
-    @Transactional
-    @Override
-    public void deleteEmployee(Long id) {
+    public void deleteById(Long id) {
         employeeRepository.deleteById(id);
     }
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
@@ -17,8 +16,8 @@ public class EmployeeController {
 
 
     @GetMapping("/")
-    public List<Employee> showAllEmployees() {
-        List<Employee> allEmployees = employeeService.getAllEmployees();
+    public List<EmployeeDTO> showAllEmployees() {
+        List<EmployeeDTO> allEmployees = employeeService.getAllEmployees();
         return allEmployees;
     }
 
@@ -26,9 +25,8 @@ public class EmployeeController {
     @PostMapping("/")
     public EmployeeDTO addNewEmployee(@RequestBody EmployeeDTO employee) {
 
-        employeeService.saveEmployee(employee);
+        return employeeService.saveEmployee(employee);
 
-        return employee;
     }
 
     @PutMapping("/")
@@ -40,16 +38,14 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable Long id) {
-        EmployeeDTO employee = employeeService.getEmployee(id);
-
-        employeeService.deleteEmployee(id);
+        employeeService.deleteById(id);
 
         return "Employee with id " + id + " was deleted";
     }
 
     @GetMapping("/{id}")
     public EmployeeDTO getEmployee(@PathVariable Long id) {
-        EmployeeDTO employee = employeeService.getEmployee(id);
+        EmployeeDTO employee = employeeService.findById(id);
         return employee;
     }
 }

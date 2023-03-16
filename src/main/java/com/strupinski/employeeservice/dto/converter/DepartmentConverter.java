@@ -2,6 +2,7 @@ package com.strupinski.employeeservice.dto.converter;
 
 import com.strupinski.employeeservice.dto.DepartmentDTO;
 import com.strupinski.employeeservice.entity.Department;
+import com.strupinski.employeeservice.exception.NoSuchRecordException;
 import com.strupinski.employeeservice.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,10 @@ public class DepartmentConverter {
 
         Optional.ofNullable(departmentDTO.getEmployeeIds())
                 .ifPresent(employeeIds -> employeeIds.forEach(id -> {
-                    department.addEmployee(employeeRepository.getById(id));
+                    department.addEmployee(employeeRepository.findById(id)
+                            .orElseThrow(() -> new NoSuchRecordException
+                                    (String.format("Employee with id=%s not found", id)))
+                    );
                 }));
 
         return department;

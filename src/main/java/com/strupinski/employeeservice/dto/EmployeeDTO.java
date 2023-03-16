@@ -25,4 +25,6 @@ public class EmployeeDTO {
 
     private Long departmentId;
 
+    private int salary;
+
 }

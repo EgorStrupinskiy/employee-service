@@ -1,5 +1,6 @@
 package com.strupinski.employeeservice.controller;
 
+import com.strupinski.employeeservice.dto.DepartmentDTO;
 import com.strupinski.employeeservice.entity.Employee;
 import com.strupinski.employeeservice.entity.User;
 import com.strupinski.employeeservice.service.UserService;

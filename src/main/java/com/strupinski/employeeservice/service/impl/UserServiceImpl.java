@@ -2,9 +2,7 @@ package com.strupinski.employeeservice.service.impl;
 
 
 
-import com.strupinski.employeeservice.entity.Employee;
 import com.strupinski.employeeservice.entity.User;
-import com.strupinski.employeeservice.repository.EmployeeRepository;
 import com.strupinski.employeeservice.repository.UserRepository;
 import com.strupinski.employeeservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -28,7 +25,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User u = userRepository.getByLogin(username);
+        User u = userRepository.findByLogin(username);
         if (Objects.isNull(u)) {
             throw new UsernameNotFoundException(String.format("User %s is not found", username));
         }

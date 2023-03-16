@@ -28,7 +28,7 @@ public class Employee {
     @Column(name = "surname")
     private String surname;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Department department;
