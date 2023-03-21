@@ -28,6 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO saveDepartment(DepartmentDTO department) {
+        System.out.println("department added");
         return converter.toDTO(departmentRepository.save(converter.toEntity(department)));
     }
 
