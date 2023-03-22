@@ -26,7 +26,7 @@ public class User {
 
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authority_id")
     private Authority authority;
 

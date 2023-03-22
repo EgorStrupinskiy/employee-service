@@ -2,16 +2,9 @@ package com.strupinski.employeeservice.dto.converter;
 
 import com.strupinski.employeeservice.dto.AuthorityDTO;
 import com.strupinski.employeeservice.entity.Authority;
-import com.strupinski.employeeservice.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 
 @Mapper

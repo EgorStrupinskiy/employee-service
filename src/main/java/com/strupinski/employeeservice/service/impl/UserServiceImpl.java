@@ -7,6 +7,7 @@ import com.strupinski.employeeservice.dto.converter.UserMapper;
 import com.strupinski.employeeservice.entity.User;
 import com.strupinski.employeeservice.repository.UserRepository;
 import com.strupinski.employeeservice.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,13 +21,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
-    @Autowired
-    private UserRepository userRepository;
-    private UserConverter converter;
+    private final UserRepository userRepository;
+    private final UserConverter converter;
 
     @Transactional
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = userRepository.findByUsername(username);
