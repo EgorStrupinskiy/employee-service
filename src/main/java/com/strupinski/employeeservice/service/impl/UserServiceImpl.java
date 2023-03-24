@@ -38,11 +38,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 
     @Override
-    public UserDTO addUser(UserDTO user) {
-        User requestUser = UserMapper.INSTANCE.fromDto(user);
-        User addedUser = userRepository.save(requestUser);
-
-        return UserMapper.INSTANCE.toDto(addedUser);
+    public UserDTO addUser(UserDTO userDTO) {
+        var entityDTO = converter.toEntity(userDTO);
+        var returnedEntity = userRepository.save(entityDTO);
+        var convertedEntity = converter.toDTO(returnedEntity);
+        return convertedEntity;
     }
 
     @Override

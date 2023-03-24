@@ -14,6 +14,6 @@ public interface AuthorityMapper {
     @Mapping(target = "users", ignore = true)
     Authority fromDto(AuthorityDTO authorityDTO);
 
-    @Mapping(target = "users", ignore = true)
+    @Mapping(target = "usersIds", ignore = true)
     AuthorityDTO toDto(Authority tag);
 }

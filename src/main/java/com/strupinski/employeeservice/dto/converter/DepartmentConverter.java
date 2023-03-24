@@ -4,20 +4,17 @@ import com.strupinski.employeeservice.dto.DepartmentDTO;
 import com.strupinski.employeeservice.entity.Department;
 import com.strupinski.employeeservice.exception.NoSuchRecordException;
 import com.strupinski.employeeservice.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class DepartmentConverter {
 
     private final EmployeeRepository employeeRepository;
-
-    @Autowired
-    public DepartmentConverter(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     public Department toEntity(DepartmentDTO departmentDTO) {
         Department department = Department.builder()

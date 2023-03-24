@@ -1,27 +1,20 @@
 package com.strupinski.employeeservice.dto.converter;
 
-import com.strupinski.employeeservice.dto.DepartmentDTO;
-import com.strupinski.employeeservice.dto.EmployeeDTO;
 import com.strupinski.employeeservice.dto.UserDTO;
 import com.strupinski.employeeservice.entity.Authority;
-import com.strupinski.employeeservice.entity.Department;
-import com.strupinski.employeeservice.entity.Employee;
 import com.strupinski.employeeservice.entity.User;
 import com.strupinski.employeeservice.repository.AuthorityRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class UserConverter {
 
     private final AuthorityRepository authorityRepository;
-
-    @Autowired
-    public UserConverter(AuthorityRepository authorityRepository) {
-        this.authorityRepository = authorityRepository;
-    }
 
     public User toEntity(UserDTO userDTO) {
         User user = User.builder()
@@ -35,6 +28,7 @@ public class UserConverter {
                     Authority au = authorityRepository.findByName(userDTO.getAuthority());
                     user.setAuthority(au);
                 });
+        System.out.println("UserDTO converted to entity");
 
         return user;
     }

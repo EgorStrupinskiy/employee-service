@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -20,19 +20,19 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<UserDTO> findAllUsers() {
         return this.service.findAll();
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public String deleteUserById(@PathVariable Long id) {
         service.deleteById(id);
 
         return "Department with id " + id + " was deleted";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register/")
     public UserDTO addNewUser(@RequestBody RegistrationRequest request) {
         return service.addUser(request.toDTO());
     }
